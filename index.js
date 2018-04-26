@@ -20,10 +20,11 @@ stylis.use((ctx, cnt, sel, par, lin, col, len) => {
 
 function css(txt) {
   stylis('', txt);
+  return window;
 };
 document = window.document;
 Element = Node = window.Node;
 window.matchMedia = () => console.log('watchMedia: NOT IMPLEMENTED!');
 document.implementation = {hasFeature: () => false};
 window.setComputedStyle = setComputedStyle;
-module.exports = window;
+module.exports = css;

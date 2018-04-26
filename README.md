@@ -1,5 +1,7 @@
 # svgdom-css
 
+[![NPM](https://nodei.co/npm/svgdom-css.png)](https://nodei.co/npm/svgdom-css/)
+
 Include custom CSS along svgdom.
 > I am using this to use [chartist] on node.js.
 

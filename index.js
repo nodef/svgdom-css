@@ -1,7 +1,8 @@
 const stylis = require('stylis');
 window = require('svgdom');
 
-const SELECTOR = [], CONTENT = [];
+const SELECTOR = [];
+const CONTENT = [];
 
 function setComputedStyle(elm) {
   for(var i=0, I=SELECTOR.length; i<I; i++) {

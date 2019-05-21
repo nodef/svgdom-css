@@ -1,5 +1,7 @@
 const stylis = require('stylis');
-window = require('svgdom');
+if (typeof window === 'undefined') {
+  window = require('svgdom');
+}
 
 const SELECTOR = [];
 const CONTENT = [];

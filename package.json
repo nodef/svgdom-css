@@ -1,6 +1,6 @@
 {
   "name": "svgdom-css",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Include custom CSS along svgdom.",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/nodef/svgdom-css#readme",
   "dependencies": {
-    "stylis": "^3.5.0",
-    "svgdom": "0.0.15"
+    "stylis": "3.5",
+    "svgdom": "0.0"
   }
 }

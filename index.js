@@ -23,6 +23,11 @@ function createWindow(setComputedStyle) {
 
 
 
+/**
+ * Include custom CSS along with svgdom.
+ * @param {string} txt css text (important comes first)
+ * @returns window
+ */
 function svgdomCss(txt) {
   // Styles with computed values (px).
   const SELECTOR = [];

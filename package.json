@@ -1,10 +1,10 @@
 {
   "name": "svgdom-css",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Include custom CSS along svgdom.",
   "main": "index.js",
   "scripts": {
-    "test": "exit"
+    "test": "node ./test.js"
   },
   "repository": {
     "type": "git",

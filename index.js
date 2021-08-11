@@ -33,7 +33,7 @@ function svgdomCss(txt) {
   function setComputedStyle(elm) {
     for (var i=0, I=SELECTOR.length; i<I; i++) {
       for (var e of elm.querySelectorAll(SELECTOR[i]))
-        e.setAttribute('style', CONTENT[i]+e.getAttribute('style'));
+        e.setAttribute('style', CONTENT[i]+(e.getAttribute('style')||''));
     }
   }
 

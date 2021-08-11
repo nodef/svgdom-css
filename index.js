@@ -11,6 +11,15 @@ function exposeGlobals(_window) {
   Element = Node = window.Node;
 }
 
+function createWindow(setComputedStyle) {
+  var window = createSVGWindow();
+  var document = window.document;
+  window.matchMedia = () => console.log('matchMedia: NOT IMPLEMENTED!');
+  document.implementation = {hasFeature: () => false};
+  window.setComputedStyle = setComputedStyle;
+  return window;
+}
+
 
 
 
@@ -38,15 +47,10 @@ function svgdomCss(txt) {
     CONTENT.push(c);
   });
   stylis('', txt);
-
-
-  // Create window.
-  var window = createSVGWindow();
-  var document = window.document;
-  window.matchMedia = () => console.log('matchMedia: NOT IMPLEMENTED!');
-  document.implementation = {hasFeature: () => false};
-  window.setComputedStyle = setComputedStyle;
-  exposeGlobals(window);
-  return window;
+  return createWindow(setComputedStyle);
 }
 module.exports = svgdomCss;
+
+
+// Expose a default window.
+exposeGlobals(createWindow(null));

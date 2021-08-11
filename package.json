@@ -1,6 +1,6 @@
 {
   "name": "svgdom-css",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Include custom CSS along svgdom.",
   "main": "index.js",
   "scripts": {

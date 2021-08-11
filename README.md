@@ -6,17 +6,16 @@ Include custom CSS along svgdom.
 ```javascript
 const css = require('svgdom-css');
 const fs = require('fs');
+/* (a default window is defined) */
 // css(<css string>)
 // -> window
 
 var customcss = '.ct-label { font-family: Courier; font-weight: bold; }';
 var window1 = css(customcss);
-/* (since window is undefined, it is set to window1) */
 // -> window
 
 var path = require.resolve('chartist/dist/chartist.min.css');
 var window2 = css(fs.readFileSync(path, 'utf8'));
-/* (since window is defined, it is not set, i.e., window !== window2) */
 // -> window
 
 var window3 = css(customcss + fs.readFileSync(path, 'utf8'));

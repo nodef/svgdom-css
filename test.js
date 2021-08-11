@@ -2,9 +2,13 @@ const fs = require('fs');
 const assert = require('assert/strict');
 const css = require('./');
 
+
+assert(typeof window !== 'undefined');
+/* (a default window is defined) */
+
 var customcss = '.ct-label { font-family: Courier; font-weight: bold; }';
 var window1 = css(customcss);
-assert(window === window1);
+assert(window !== window1);
 // -> window
 
 var path = require.resolve('chartist/dist/chartist.min.css');

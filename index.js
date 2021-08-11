@@ -1,6 +1,8 @@
 const stylis = require('stylis');
+
 if (typeof window === 'undefined') {
-  window = require('svgdom');
+  const {createSVGWindow} = require('svgdom');
+  window = createSVGWindow();
 }
 
 const SELECTOR = [];

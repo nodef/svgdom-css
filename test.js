@@ -1,16 +1,18 @@
 const fs = require('fs');
+const assert = require('assert/strict');
 const css = require('./');
-// css(<css string>)
-// -> window
 
 var customcss = '.ct-label { font-family: Courier; font-weight: bold; }';
-css(customcss);
+var window1 = css(customcss);
+assert(window === window1);
 // -> window
 
 var path = require.resolve('chartist/dist/chartist.min.css');
-css(fs.readFileSync(path, 'utf8'));
+var window2 = css(fs.readFileSync(path, 'utf8'));
+assert(window !== window2);
 // -> window
 
-css(customcss + fs.readFileSync(path, 'utf8'));
+var window3 = css(customcss + fs.readFileSync(path, 'utf8'));
+assert(window !== window3);
 /* (css overloading not supported, custom css must be included first!) */
 // -> window

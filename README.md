@@ -1,5 +1,5 @@
 Include custom CSS along svgdom.
-> I am using this to use [chartist] on node.js.
+> I was using this to use [chartist] on node.js.
 
 <br>
 
@@ -10,14 +10,16 @@ const fs = require('fs');
 // -> window
 
 var customcss = '.ct-label { font-family: Courier; font-weight: bold; }';
-css(customcss);
+var window1 = css(customcss);
+/* (since window is undefined, it is set to window1) */
 // -> window
 
 var path = require.resolve('chartist/dist/chartist.min.css');
-css(fs.readFileSync(path, 'utf8'));
+var window2 = css(fs.readFileSync(path, 'utf8'));
+/* (since window is defined, it is not set, i.e., window !== window2) */
 // -> window
 
-css(customcss + fs.readFileSync(path, 'utf8'));
+var window3 = css(customcss + fs.readFileSync(path, 'utf8'));
 /* (css overloading not supported, custom css must be included first!) */
 // -> window
 ```

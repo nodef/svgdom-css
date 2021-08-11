@@ -1,19 +1,2 @@
-# Parts
-src/
-wiki/
-tests/
-.gitmodules
-
 # Build
-.build/
-.travis.yml
-tsconfig.json
-rollup.config.js
-jestconfig.json
-build.js
 test.js
-
-# Others
-unused/
-unused.*
-TODO

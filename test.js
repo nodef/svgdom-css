@@ -11,7 +11,7 @@ var window1 = css(customcss);
 assert(window !== window1);
 // -> window
 
-var path = require.resolve('chartist/dist/chartist.min.css');
+var path = require.resolve('chartist/dist/index.css');
 var window2 = css(fs.readFileSync(path, 'utf8'));
 assert(window !== window2);
 // -> window

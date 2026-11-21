@@ -1,61 +1,78 @@
-const stylis = require('stylis');
-const {createSVGWindow} = require('svgdom');
-
-
+const {compile, serialize, middleware, prefixer, stringify} = require('stylis');
+const { createSVGWindow } = require('svgdom');
 
 
 function exposeGlobals(_window) {
-  if (typeof window !== 'undefined') return;
-  window = _window;
-  document = window.document;
-  Element = Node = window.Node;
+  if (typeof global.window !== 'undefined') return;
+  global.window = _window;
+  global.document = _window.document;
+  global.Element = _window.Element || _window.Node;
+  global.Node = _window.Node;
 }
 
+
 function createWindow(setComputedStyle) {
-  var window = createSVGWindow();
-  var document = window.document;
-  window.matchMedia = () => console.log('matchMedia: NOT IMPLEMENTED!');
-  document.implementation = {hasFeature: () => false};
+  const window = createSVGWindow();
+  const document = window.document;
+  // matchMedia must return a MediaQueryList-like object
+  window.matchMedia = (q) => ({
+    matches: false,
+    media: q,
+    onchange: null,
+    addListener() {},
+    removeListener() {},
+    addEventListener() {},
+    removeEventListener() {},
+    dispatchEvent() { return false; }
+  });
+  // document.implementation is read-only on svgdom
+  try {
+    Object.defineProperty(document, 'implementation', {
+      configurable: true,
+      value: { hasFeature: () => false }
+    });
+  } catch (e) { /* ignore */ }
   window.setComputedStyle = setComputedStyle;
   return window;
 }
 
 
-
-
-/**
- * Include custom CSS along with svgdom.
- * @param {string} txt css text (important comes first)
- * @returns window
- */
 function svgdomCss(txt) {
-  // Styles with computed values (px).
   const SELECTOR = [];
   const CONTENT = [];
 
-
-  // Set style in px, instead of (r)em.
   function setComputedStyle(elm) {
-    for (var i=0, I=SELECTOR.length; i<I; i++) {
-      for (var e of elm.querySelectorAll(SELECTOR[i]))
-        e.setAttribute('style', CONTENT[i]+(e.getAttribute('style')||''));
+    for (let i = 0, I = SELECTOR.length; i < I; i++) {
+      for (const e of elm.querySelectorAll(SELECTOR[i])) {
+        // CONTENT appended last so px values win over original em values
+        e.setAttribute(
+          'style',
+          (e.getAttribute('style') || '') + CONTENT[i]
+        );
+      }
     }
   }
 
-
-  // Capture styles to be replaced with computed values.
-  stylis.use()((ctx, cnt, sel, par, lin, col, len) => {
-    var s = sel.join(', '), c = cnt.endsWith(';')? cnt:cnt+';';
-    if(s.length===0 || s.search(/\:after|\:before/g)>=0 || c.search(/flex|webkit|moz/g)>=0) return;
-    c = c.replace(/([\d\.]+)r?em/g, (m, p1) => 16*parseFloat(p1)+'px');
+  // Stylis v4 middleware signature: (element, index, children, callback)
+  function capturePlugin(element) {
+    if (element.type !== 'rule') return;
+    const s = Array.isArray(element.props)? element.props.join(', ') : String(element.props);
+    if (!s || /:after|:before/.test(s)) return;
+    const decls = (element.children || []).filter(c => c.type === 'decl');
+    if (!decls.length) return;
+    let c = decls.map(d => `${d.props}:${d.children};`).join('');
+    if (/flex|webkit|moz/.test(c)) return;
+    c = c.replace(/([\d.]+)r?em/g, (m, p1) => 16 * parseFloat(p1) + 'px');
     SELECTOR.push(s);
     CONTENT.push(c);
-  });
-  stylis('', txt);
+  }
+  // Stylis v4 pipeline: compile → middleware(prefixer, capture, stringify)
+  serialize(compile(txt), middleware([prefixer, capturePlugin, stringify]));
   return createWindow(setComputedStyle);
 }
+
+
 module.exports = svgdomCss;
 
-
-// Expose a default window.
+// Expose a default window
 exposeGlobals(createWindow(null));

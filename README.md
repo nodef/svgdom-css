@@ -32,6 +32,12 @@ var window3 = css(customcss + fs.readFileSync(path, 'utf8'));
 - [svgdom :: Ulrich-Matthias Schäfer](https://www.npmjs.com/package/svgdom)
 - [stylis :: Sultan](https://www.npmjs.com/package/stylis)
 
-[chartist]: https://www.npmjs.com/package/chartist
+<br>
+<br>
 
+[![](https://raw.githubusercontent.com/qb40/designs/gh-pages/0/image/11.png)](https://wolfram77.github.io)<br>
+[![ORG](https://img.shields.io/badge/org-nodef-green?logo=Org)](https://nodef.github.io)
 ![](https://ga-beacon.deno.dev/G-RC63DPBH3P:SH3Eq-NoQ9mwgYeHWxu7cw/github.com/nodef/svgdom-css)
+
+
+[chartist]: https://www.npmjs.com/package/chartist
